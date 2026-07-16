@@ -159,6 +159,8 @@ h1{margin:4px 0 4px;font-size:30px}
 }
 .place-title{font-size:19px;font-weight:850}
 .place-title a{color:var(--text);text-decoration:none}
+.stop-options{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}
+.stop-option{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;padding:5px 8px;color:var(--text);background:var(--blue-soft);font-size:15px}
 .arrival{
   grid-column:1;
   grid-row:1;
@@ -601,7 +603,7 @@ h1{margin:4px 0 4px;font-size:30px}
           <div class="preview-top">
             <div>
               <div class="preview-day">9/19（六）</div>
-              <div class="preview-route">🚠 有珠山 → 🌃 苫小牧</div>
+              <div class="preview-route">🚠 有珠山 → 🐟 虎杖浜 → 🌃 苫小牧</div>
             </div>
           </div>
         </div>
@@ -610,7 +612,7 @@ h1{margin:4px 0 4px;font-size:30px}
           <div class="preview-top">
             <div>
               <div class="preview-day">9/20（日）</div>
-              <div class="preview-route">🦢 烏托內湖 → ✈ 新千歲機場</div>
+              <div class="preview-route">🌃 苫小牧 → ✈️ 新千歲機場</div>
             </div>
           </div>
         </div>
@@ -668,7 +670,7 @@ h1{margin:4px 0 4px;font-size:30px}
         <div class="sub">預約號碼 99995679600</div>
 
         <div class="rental-links">
-          <a href="https://www.google.com/maps/search/?api=1&query=トヨタレンタカー+新千歳空港すずらん店" target="_blank">新千歲機場鈴蘭店 ↗</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Toyota+Rent+a+Car+New+Chitose+Airport+Suzuran+Shop+758-134+Bibi+Chitose+Hokkaido" target="_blank">新千歲機場鈴蘭店 ↗</a>
           <a href="tel:+81123240100">撥打 0123-24-0100</a>
         </div>
 
@@ -720,22 +722,22 @@ h1{margin:4px 0 4px;font-size:30px}
       <h2 style="margin:0">💴 日圓匯率工具</h2>
       <div class="currency-grid">
         <div class="currency-field">
-          <label for="twdAmount">新台幣 TWD</label>
-          <input id="twdAmount" type="number" inputmode="decimal" min="0" step="1" placeholder="例如 1000">
+          <label for="jpyAmount">日圓 JPY</label>
+          <input id="jpyAmount" type="number" inputmode="decimal" min="0" step="1" placeholder="例如 5000">
         </div>
         <div class="currency-field">
-          <label for="jpyAmount">結果 JPY</label>
-          <input id="jpyAmount" type="number" inputmode="decimal" readonly>
+          <label for="twdAmount">結果 TWD</label>
+          <input id="twdAmount" type="number" inputmode="decimal" readonly>
         </div>
       </div>
 
       <div class="rate-row">
-        <span>1 TWD =</span>
-        <input id="jpyRate" type="number" inputmode="decimal" min="0.01" step="0.01" value="4.55" readonly>
-        <span>JPY</span>
+        <span>1 JPY =</span>
+        <input id="jpyRate" type="number" inputmode="decimal" min="0.001" step="0.0001" value="0.2200" readonly>
+        <span>TWD</span>
         <button class="rate-btn" id="refreshRate" type="button">更新</button>
       </div>
-      <div class="quick-rates"><button type="button" data-twd="1000">NT$1,000</button><button type="button" data-twd="3000">NT$3,000</button><button type="button" data-twd="5000">NT$5,000</button><button type="button" data-twd="10000">NT$10,000</button></div>
+      <div class="quick-rates"><button type="button" data-jpy="1000">¥1,000</button><button type="button" data-jpy="3000">¥3,000</button><button type="button" data-jpy="5000">¥5,000</button><button type="button" data-jpy="10000">¥10,000</button></div>
       <div class="rate-status" id="rateStatus" aria-live="polite"></div>
     </article>
   </section>
@@ -761,7 +763,7 @@ const dayData = {
     hotel:"札幌住宿",
     stops:[
       {time:"11:05–12:00",name:"新千歲機場／取車",note:"入境、領行李，前往鈴蘭店。",stay:"約 55 分",next:"下一段約 30 分"},
-      {time:"12:30–13:20",name:"花ロードえにわ",note:"中午道之驛用餐，品嚐人氣南瓜咖哩麵包。",stay:"約 50 分",next:"下一段約 15 分"},
+      {time:"12:30–13:20",name:"道と川の駅 花ロードえにわ",note:"逛在地農特產品直賣區，認識惠庭蔬果與加工品，品嚐人氣南瓜咖哩麵包。",stay:"約 50 分",next:"下一段約 15 分"},
       {time:"13:35–20:00",name:"三井 Outlet 札幌北廣島",note:"購物、晚餐一次完成，今天主要採購行程。",stay:"約 6 小時 25 分",next:"前往札幌市區約 35 分"},
       {time:"20:35–21:20",name:"札幌市區／狸小路六丁目 → 二丁目",note:"補吃居酒屋，沿商店街步行逛街。",stay:"約 45 分",next:"前往住宿約 10 分"},
       {time:"21:30",name:"札幌住宿",note:"Check-in。",stay:"",next:""}
@@ -771,14 +773,14 @@ const dayData = {
         title:"惠庭",
         note:"Day 1 中午短停",
         shops:[
-          ["推薦","花ロードえにわ","道之驛午餐、南瓜咖哩麵包。","https://www.google.com/maps/search/?api=1&query=花ロードえにわ"]
+          ["必停","道と川の駅 花ロードえにわ","逛在地農特產品直賣區，買惠庭蔬果、加工品與人氣南瓜咖哩麵包。","約 09:00–18:00，出發前確認","https://www.google.com/maps/search/?api=1&query=%E9%81%93%E3%81%A8%E5%B7%9D%E3%81%AE%E9%A7%85+%E8%8A%B1%E3%83%AD%E3%83%BC%E3%83%89%E3%81%88%E3%81%AB%E3%82%8F+817-18+Minamishimamatsu+Eniwa+Hokkaido+061-1375","惠庭"]
         ]
       },
       {
         title:"北廣島",
         note:"Day 1 主要購物區",
         shops:[
-          ["必去","三井 Outlet 札幌北廣島","戶外品牌、生活選物、午晚餐一次完成。","10:00–20:00","https://www.google.com/maps/search/?api=1&query=三井アウトレットパーク札幌北広島","主要行程"],
+          ["必去","三井 Outlet 札幌北廣島","採買戶外鞋服、運動服飾、旅行用品與北海道伴手禮。","10:00–20:00","https://www.google.com/maps/search/?api=1&query=三井アウトレットパーク札幌北広島","主要行程"],
           ["Guide","查看 Outlet 店號簡圖","依官方樓層圖校正店號；Clover 1F → Clover 2F → Maple 2F。","現場對照使用","guides/kitahiroshima-outlet/index.html","主要行程"],
           ["冰品必吃","札幌農学校 札幌北広島店","酪農ミルクソフト；位於Clover Mall 1F北海道四季彩館內。","10:00–20:00","https://www.google.com/maps/search/?api=1&query=札幌農学校+札幌北広島店","Outlet冰品"],
           ["冰品備選","MIL PRESSO","北海道ロコファームビレッジ內的北海道素材霜淇淋。","10:00–20:00","https://www.google.com/maps/search/?api=1&query=MIL+PRESSO+三井アウトレットパーク札幌北広島","Outlet冰品"]
@@ -788,13 +790,13 @@ const dayData = {
         title:"札幌晚上",
         note:"依實際步行順序排列：狸小路外圍 → 7丁目 → 6丁目 → 5丁目 → 4丁目 → 3丁目 → 2丁目",
         shops:[
-          ["備選","Space 1-15","文青選物集合空間；各店營業日與時間不同，多數週末午後營業。","各店不同，出發前確認","https://www.google.com/maps/search/?api=1&query=Space+1-15+Sapporo","狸小路外圍"],
-          ["推薦","D&DEPARTMENT HOKKAIDO by 3KG","日本地方設計選物。","11:00–19:00（日、月休；遇假日可能調整）","https://www.google.com/maps/search/?api=1&query=D%26DEPARTMENT+HOKKAIDO+by+3KG","狸小路外圍"],
-          ["必去","幸乃園 安中茶舗","老字號日本茶專門店，適合焙茶、綠茶與茶器。","平日 10:00–19:00；日、祝 13:00–18:30；第3日曜休","https://www.google.com/maps/search/?api=1&query=幸乃園+安中茶舗+札幌","狸小路7丁目"],
-          ["推薦","Soup Curry ouchi","狸小路7丁目的湯咖哩店。","11:30–15:00／17:00–23:00；週三、週日晚上休","https://www.google.com/maps/search/?api=1&query=スープカレー+ouchi+札幌","狸小路7丁目"],
-          ["推薦","串鳥 南二条店","北海道平價人氣串燒。","平日 16:30–23:30；六日祝 15:30–23:30","https://www.google.com/maps/search/?api=1&query=串鳥+南二条店+札幌","狸小路5丁目"],
-          ["備選","BicCamera Select 札幌狸小路店","電子用品、旅行配件與臨時補貨。","10:00–23:00","https://www.google.com/maps/search/?api=1&query=ビックカメラ+Select+札幌狸小路店","狸小路5丁目"],
-          ["必去","TNOC THE STORE SAPPORO T4","北海道原創生活與服飾品牌。","10:00–21:00","https://www.google.com/maps/search/?api=1&query=TNOC+THE+STORE+SAPPORO+T4","狸小路4丁目"]
+          ["備選","Space 1-15","找北海道作家陶器、布包、紙品、飾品與手作生活雜貨。","各店不同，出發前確認","https://www.google.com/maps/search/?api=1&query=Space+1-15+Sapporo","狸小路外圍"],
+          ["推薦","D&DEPARTMENT HOKKAIDO by 3KG","買北海道製餐具、木工作品、地方食品與長用型生活用品。","11:00–19:00（日、月休；遇假日可能調整）","https://www.google.com/maps/search/?api=1&query=D%26DEPARTMENT+HOKKAIDO+by+3KG","狸小路外圍"],
+          ["必去","幸乃園 安中茶舗","買焙茶、煎茶、抹茶與日式茶壺、茶杯。","平日 10:00–19:00；日、祝 13:00–18:30；第3日曜休","https://www.google.com/maps/search/?api=1&query=幸乃園+安中茶舗+札幌","狸小路7丁目"],
+          ["推薦","Soup Curry ouchi","點雞腿野菜湯咖哩，可依喜好調整辣度與飯量。","11:30–15:00／17:00–23:00；週三、週日晚上休","https://www.google.com/maps/search/?api=1&query=スープカレー+ouchi+札幌","狸小路7丁目"],
+          ["推薦","串鳥 南二条店","點豬肉串、雞皮、雞肉丸與北海道風串燒。","平日 16:30–23:30；六日祝 15:30–23:30","https://www.google.com/maps/search/?api=1&query=串鳥+南二条店+札幌","狸小路5丁目"],
+          ["備選","BicCamera Select 札幌狸小路店","補行動電源、充電線、轉接頭、記憶卡與旅行小電器。","10:00–23:00","https://www.google.com/maps/search/?api=1&query=ビックカメラ+Select+札幌狸小路店","狸小路5丁目"],
+          ["必去","TNOC THE STORE SAPPORO T4","買北海道主題 T-shirt、帽子、外套、包袋與生活雜貨。","10:00–21:00","https://www.google.com/maps/search/?api=1&query=TNOC+THE+STORE+SAPPORO+T4","狸小路4丁目"]
         ]
       }
     ]
@@ -807,48 +809,49 @@ const dayData = {
     route:"札幌 → 小樽",
     hotel:"小樽住宿",
     stops:[
-      {time:"08:00",name:"中島公園／豐平館",note:"早晨散步，咖啡可在住宿附近簡單解決。",stay:"約 45 分",next:"下一段約 20 分"},
-      {time:"09:15–10:30",name:"札幌中央市場",note:"早午餐／海鮮。",stay:"約 75 分",next:"下一段約 40 分"},
+      {time:"08:00",name:"咖啡廳早餐 → 中島公園／豐平館",note:"在咖啡廳用早餐，再前往中島公園與豐平館散步。",stay:"約 45 分",next:"下一段約 20 分"},
+      {time:"09:15",name:"場外市場バス駐車場",note:"先完成停車，再進入札幌中央卸売市場 場外市場。",stay:"",next:"市場就在前方"},
+      {time:"09:15–10:30",name:"札幌中央卸売市場 場外市場",note:"海鮮丼、螃蟹與烤魚優先。",stay:"約 75 分",next:"下一段約 40 分"},
       {time:"中央市場後",name:"Sapporo Experience Base（備選）",note:"Salomon 直營體驗型門市，時間與動線允許再前往。",stay:"約 30–45 分",next:"不納入固定時間"},
       {time:"11:30",name:"頭大佛",note:"安藤忠雄建築與園區。",stay:"約 60 分",next:"下一段約 60 分"},
       {time:"13:30–14:00",name:"小樽住宿點／停車",note:"放行李後改為步行。",stay:"約 20 分",next:"後續步行"},
-      {time:"14:00–19:00",name:"堺町通 → 北一硝子三号館 → 小樽運河",note:"甜點、玻璃工藝、選物，最後接夕景與夜景。",stay:"整段約 5 小時",next:""},
-      {time:"19:00 左右",name:"小樽 Muse",note:"燭光洋食餐廳，安排 Day 2 晚餐。",stay:"約 60–90 分",next:"步行返回住宿"}
+      {time:"14:00–18:15",name:"堺町通 → 北一硝子三号館 → 小樽運河",note:"甜點、玻璃工藝、選物，最後接夕景與夜景。",stay:"整段約 4 小時 15 分",next:"18:30 已預約晚餐"},
+      {time:"18:30（已預約）",name:"小樽 Muse",note:"燭光洋食餐廳，已確認 Day 2 晚餐預約。",stay:"約 60–90 分",next:"步行返回住宿"}
     ],
     areas:[
       {
         title:"札幌上午",
         note:"Day 2 早晨使用｜先停車，再步行至公園與咖啡店",
         shops:[
-          ["停車","ナビパーク南9西4駐車場","中島公園站2號出口附近，步行前往公園方便。","24小時；08:00–20:00 每20分 ¥300；12小時最高 ¥1,000","https://www.google.com/maps/search/?api=1&query=ナビパーク+南9西4駐車場+札幌","中島公園停車"],
+          ["停車","全900 ナビパーク南９西４駐車場","中島公園站2號出口附近，停車後步行前往公園。","24小時；08:00–20:00 每20分 ¥300；12小時最高 ¥1,000","https://www.google.com/maps/search/?api=1&query=%E5%85%A8900+%E3%83%8A%E3%83%93%E3%83%91%E3%83%BC%E3%82%AF%E5%8D%97%EF%BC%99%E8%A5%BF%EF%BC%94%E9%A7%90%E8%BB%8A%E5%A0%B4+4+Chome-6-13+Minami+9+Jonishi+Sapporo","中島公園停車"],
           ["主行程","中島公園／豐平館","早晨散步；從停車場步行進入公園。","公園全天；豐平館開館時間另確認","https://www.google.com/maps/search/?api=1&query=中島公園+豊平館","中島公園"],
           ["咖啡候選","Postman Oak","墨爾本風格精品咖啡，自家烘焙；有 Long Black、Piccolo，也有自製輕食與甜點。","週二至週六 07:30–16:30；週日、週一休","https://www.google.com/maps/search/?api=1&query=Postman+Oak+Sapporo","中島公園咖啡"],
-          ["咖啡候選","Smooch Coffee Stand","公園東側的小型咖啡站，適合散步途中快速外帶；氣氛輕鬆。","官方社群顯示約 08:00–18:00；營業日可能臨時調整","https://www.google.com/maps/search/?api=1&query=Smooch+Coffee+Stand+Sapporo","中島公園咖啡"],
-          ["咖啡候選","森香珈琲","自家焙煎與完整早餐／甜點型咖啡店，適合坐下吃較正式的早餐。","09:00–17:00；火、三休；09:00–11:00 Morning","https://www.google.com/maps/search/?api=1&query=森香珈琲+札幌","中島公園咖啡"],
-          ["停車","場外市場バス駐車場","你指定的中央市場停車點；名稱為巴士停車場，一般租車是否可停需現場確認。","巴士 07:00–17:00 免費；場外市場另有一般訪客免費停車場","https://www.google.com/maps/search/?api=1&query=場外市場バス駐車場+札幌","中央市場停車"],
-          ["主行程","札幌中央卸売市場 場外市場","安排海鮮早午餐，吃完再前往頭大佛。","多數店家清晨至中午前後營業","https://www.google.com/maps/search/?api=1&query=札幌市中央卸売市場+場外市場","中央市場"],
-          ["備選","Sapporo Experience Base／サロモンストア","Salomon 直營體驗型門市，集合跑步、越野與戶外裝備；位置在宮之森，需評估是否值得繞行。","平日 11:00–20:00；六日祝 10:00–19:00；週三休","https://www.google.com/maps/search/?api=1&query=サロモンストア+サッポロエクスペリエンスベース","中央市場後備選"]
+          ["咖啡候選","Smooch Coffee Stand","外帶手沖咖啡、拿鐵或美式咖啡。","官方社群顯示約 08:00–18:00；營業日可能臨時調整","https://www.google.com/maps/search/?api=1&query=Smooch+Coffee+Stand+Sapporo","中島公園咖啡"],
+          ["咖啡候選","森香珈琲","點自家焙煎咖啡、Morning 吐司早餐與當日甜點。","09:00–17:00；火、三休；09:00–11:00 Morning","https://www.google.com/maps/search/?api=1&query=森香珈琲+札幌","中島公園咖啡"],
+          ["停車","場外市場バス駐車場","21 Chome-2-26 Kita 10 Jonishi；停車後直接進入市場。","依現場標示","https://www.google.com/maps/search/?api=1&query=%E6%97%A5%E6%9C%AC%E3%80%92060-0011%20Hokkaido%2C%20Sapporo%2C%20Chuo%20Ward%2C%20Kita%2011%20Jonishi%2C%2021%20Chome%E2%88%922%E2%88%923%20%E7%AC%AC%E5%85%AB%E5%8D%B8%E5%A3%B2%E5%B8%82%E5%A0%B4","中央市場停車"],
+          ["市場","札幌中央卸売市場 場外市場","海鮮丼、螃蟹與烤魚優先。","依市場營業時間","https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%E6%9C%AD%E5%B9%8C%E4%B8%AD%E5%A4%AE%E5%B8%82%E5%A0%B4-%E5%A0%B4%E5%A4%96%E5%B8%82%E5%A0%B4","中央市場"],
+          ["備選","Sapporo Experience Base／サロモンストア","試穿 Salomon 越野跑鞋、健行鞋，查看 S/LAB 裝備與跑步背心。","平日 11:00–20:00；六日祝 10:00–19:00；週三休","https://www.google.com/maps/search/?api=1&query=サロモンストア+サッポロエクスペリエンスベース","中央市場後備選"]
         ]
       },
       {
         title:"頭大佛",
         note:"Day 2 中午",
         shops:[
-          ["主行程","頭大佛","安藤忠雄建築與園區。","https://www.google.com/maps/search/?api=1&query=頭大仏"]
+          ["主行程","頭大佛","安藤忠雄建築與園區。","https://www.google.com/maps/search/?api=1&query=2%20Takino%2C%20Minami%20Ward%2C%20Sapporo%2C%20Hokkaido%20005-0862%E6%97%A5%E6%9C%AC"]
         ]
       },
       {
         title:"小樽 Walking Guide｜依步行順序",
         note:"住宿放行李後，由堺町南端一路往小樽運河方向走；冰品直接併入沿途店家卡片。",
         shops:[
-          ["① 起點","堺町通南端／LeTAO 本店","從童話十字路口開始北行；LeTAO 可買甜點，LeTAO PLUS 可順路吃起司系與 Jersey 牛乳霜淇淋。","09:00–18:00（各店略有差異）","https://www.google.com/maps/search/?api=1&query=LeTAO+小樽","堺町南端"],
-          ["② 玻璃街區","北一硝子三号館","玻璃工藝與店舖；Terrace 可順路吃多段霜淇淋，口味依季節。","10:00–17:30（L.O.17:15）","https://www.google.com/maps/search/?api=1&query=北一硝子三号館","堺町通"],
-          ["③ 甜點段","六花亭 小樽運河店","北海道甜點與伴手禮，沿堺町通北行順路停留。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=六花亭+小樽運河店","堺町通"],
-          ["④ 甜點段","北菓樓 小樽本館","泡芙與北海道甜點，與六花亭相鄰，可一起逛。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=北菓楼+小樽本館","堺町通"],
-          ["⑤ 冰品備選","ポプラファーム 小樽店","若仍想吃冰，可選半顆哈密瓜搭配牛奶霜淇淋；不必與前面冰品全部都吃。","11:00–17:30（L.O.17:00）","https://www.google.com/maps/search/?api=1&query=ポプラファーム+小樽店","堺町通北段"],
-          ["⑥ 夕景","小樽運河","由堺町通北端接往運河，安排夕景與夜景拍照。","全天開放","https://www.google.com/maps/search/?api=1&query=小樽運河","運河"],
-          ["⑦ 晚餐","小樽 Muse","看完運河後前往晚餐；主打漢堡排、蛋包飯等洋食。","17:00–20:30（L.O.20:00）；週一休","https://www.google.com/maps/search/?api=1&query=小樽+Muse","晚餐"],
-          ["繞路備選","アイスクリームパーラー美園","1919年創業老牌冰淇淋店；不在主要堺町直線動線上，只有時間充裕才繞去。","出發前確認","https://www.google.com/maps/search/?api=1&query=アイスクリームパーラー美園+小樽","備選"]
+          ["① 起點","堺町通南端／LeTAO 本店","買 Double Fromage 雙層起司蛋糕、Royal Montagne 巧克力；LeTAO PLUS 吃 Jersey 牛乳霜淇淋。","09:00–18:00（各店略有差異）","https://www.google.com/maps/search/?api=1&query=%E5%B0%8F%E6%A8%BD%E6%B4%8B%E8%8F%93%E5%AD%90%E8%88%97%E3%83%AB%E3%82%BF%E3%82%AA%E6%9C%AC%E5%BA%97","堺町南端"],
+          ["② 玻璃街區","北一硝子三号館","買玻璃杯、醬油瓶與燈具；Terrace 吃八段霜淇淋。","10:00–17:30（L.O.17:15）","https://www.google.com/maps/search/?api=1&query=北一硝子三号館","堺町通"],
+          ["③ 甜點段","六花亭 小樽運河店","買 Marusei 奶油夾心餅、草莓巧克力與雪やこんこ。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=六花亭+小樽運河店","堺町通"],
+          ["④ 甜點段","北菓樓 小樽本館","買妖精之森年輪蛋糕、開拓おかき與夢不思議泡芙。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=北菓楼+小樽本館","堺町通"],
+          ["⑤ 冰品備選","ポプラファーム 小樽店","點サンタのヒゲ：半顆哈密瓜搭配北海道牛奶霜淇淋。","11:00–17:30（L.O.17:00）","https://www.google.com/maps/search/?api=1&query=ポプラファーム+小樽店","堺町通北段"],
+          ["⑥ 老舖冰品","アイスクリームパーラー美園","吃自家製傳統冰淇淋、聖代或冰淇淋蘇打。","11:00–17:00","https://www.google.com/maps/search/?api=1&query=アイスクリームパーラー美園+小樽","小樽站前／稲穂"],
+          ["⑦ 夕景","小樽運河／中央橋公園","拍攝石造倉庫、煤氣燈與水面倒影。","全天開放","https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E5%A4%AE%E6%A9%8B%E5%85%AC%E5%9C%92+4-3+Minatomachi+Otaru+Hokkaido","運河"],
+          ["⑧ 已預約晚餐","小樽 Muse","18:30 已預約；看完運河後前往，主打漢堡排、蛋包飯等洋食。","預約 18:30｜17:00–20:30（L.O.20:00）；週一休","https://www.google.com/maps/search/?api=1&query=小樽+Muse","晚餐"]
         ]
       }
     ]
@@ -859,19 +862,27 @@ const dayData = {
     missions:["外帶EBIJIN漢堡","Milk Kobo冰品","準時入住洞爺湖","搭煙火船"],
     foodFocus:["EBIJIN鹿肉漢堡","Milk Kobo牛奶霜淇淋"],
     route:"小樽 → 俱知安 → 二世谷 → 洞爺湖",
-    hotel:"洞爺湖溫泉街",
+    hotel:"洞爺湖住宿（Airbnb）",
     stops:[
       {time:"07:30–08:30",name:"小樽運河晨間散步",note:"早晨人潮較少，先看運河晨景。",stay:"約 60 分",next:"步行前往堺町通"},
-      {time:"09:00–10:30",name:"北一硝子 北一ホール",note:"今天主要咖啡與早餐，在石油燈照明的老倉庫空間慢慢休息。",stay:"約 90 分",next:"前往 EBIJIN／外帶漢堡"},
-      {time:"10:40–11:20",name:"EBIJIN 小樽店｜外帶漢堡",note:"主選：後志產鹿肉漢堡。星期五 11:00 開門，預留移動、等開店與外帶時間；店家沒有專用停車場。",stay:"約 30–40 分",next:"約 11:20 離開小樽"},
-      {time:"11:20–12:45",name:"小樽 → 俱知安",note:"今天第一段長距離；Kutosan Park 為你指定的停車點。實際車程請以當日導航為準。",stay:"估計約 75–90 分",next:"步行前往午餐"},
-      {time:"12:45–13:45",name:"MARKIE CURRY",note:"俱知安在地香料咖哩，安排正式午餐；若漢堡吃得較多，可縮短或改成輕量餐。",stay:"約 60 分",next:"前往高橋牧場，依當日導航約 20–30 分"},
-      {time:"14:10–15:25",name:"ニセコ高橋牧場 Milk Kobo",note:"北海道牛奶、冰淇淋、甜點、伴手禮與羊蹄山景；今天下午主要停留點。",stay:"約 75 分",next:"fanfun 為另一停車點，實際車程以導航為準"},
-      {time:"15:35–16:00",name:"革と珈琲 fanfun（可選）",note:"獨立停車點，皮革工藝與咖啡；若前段延誤，直接略過以確保準時抵達洞爺湖。",stay:"約 25 分",next:"前往洞爺湖約 60–80 分，依道路與導航為準"},
-      {time:"16:50–17:10",name:"洞爺湖溫泉街住宿",note:"Check-in、放行李、確認停車；抵達後優先處理煙火船票與登船資訊。",stay:"約 20 分",next:"晚餐與湖畔自由活動"},
-      {time:"17:10–17:40",name:"確認煙火船票／登船碼頭",note:"若尚未預約，抵達後優先確認售票、集合位置與登船時間。",stay:"約 30 分",next:"晚餐"},
-      {time:"17:40–19:00",name:"洞爺湖晚餐",note:"晚餐不要安排過晚，避免影響登船。",stay:"約 90 分",next:"回房或湖畔散步"},
-      {time:"19:00–20:00",name:"湖畔散步／回房準備",note:"準備外套、相機與船票，湖面晚間可能有風。",stay:"約 60 分",next:"前往碼頭"},
+      {time:"09:00–10:15",name:"北一硝子 北一ホール",note:"在石油燈照明的老倉庫咖啡廳用早餐。",stay:"約 75 分",next:"步行前往サツドラ約 10 分"},
+      {time:"10:25–11:35",name:"サツドラ小樽堺町店",note:"先採買防曬、暈車藥、腸胃藥、止痛藥、面膜與旅行用品。",stay:"約 70 分",next:"前往漢堡店"},
+      {time:"11:35–12:05",name:"🍔 漢堡（二選一）",note:"11:00 開門後再抵達，降低剛開門等待風險。",stay:"約 30 分",next:"約 12:05 離開小樽",options:[
+        {label:"主選",name:"EBIJIN 小樽店",link:"https://www.google.com/maps/search/?api=1&query=EBIJIN+%E5%B0%8F%E6%A8%BD%E5%BA%97+2+Chome-13-16+Inaho+Otaru+Hokkaido+047-0032"},
+        {label:"備選",name:"CONTAINER BURGER 3-SUN",link:"https://www.google.com/maps/search/?api=1&query=CONTAINER+BURGER+3-SUN+小樽"}
+      ]},
+      {time:"12:05–13:30",name:"小樽 → 俱知安",note:"今天第一段長距離。",stay:"估計約 75–90 分",next:"抵達後前往午餐",static:true},
+      {time:"13:30–14:30",name:"MARKIE CURRY",note:"俱知安在地香料咖哩。",stay:"約 60 分",next:"前往高橋牧場約 20–30 分"},
+      {time:"14:55–15:50",name:"ニセコ高橋牧場 Milk Kobo",note:"北海道牛奶、冰淇淋、甜點、伴手禮與羊蹄山景。",stay:"約 55 分",next:"fanfun 為可選的獨立停車點"},
+      {time:"16:00–16:15",name:"革と珈琲 fanfun（可選）",note:"皮革工藝與咖啡；若前段延誤可略過。",stay:"約 15 分",next:"前往洞爺湖"},
+      {time:"途中擇一",name:"休息站／冰品（二選一）",note:"只停一個即可。",stay:"",next:"前往洞爺湖住宿",options:[
+        {label:"休息站",name:"道の駅 230ルスツ"},
+        {label:"冰品",name:"🍦 Lake Hill Farm 本店"}
+      ]},
+      {time:"17:15–17:35",name:"洞爺湖住宿（Airbnb）",note:"Check-in、放行李、確認免費停車。",stay:"約 20 分",next:"わかさいも本舗與煙火船票"},
+      {time:"17:35–18:05",name:"わかさいも本舗／確認煙火船票",note:"19:30 關門前完成採買，並確認售票、集合位置與登船時間。",stay:"約 30 分",next:"晚餐"},
+      {time:"18:05–19:15",name:"洞爺湖晚餐",note:"晚餐不要安排過晚，避免影響登船。",stay:"約 70 分",next:"回房或湖畔散步"},
+      {time:"19:15–20:00",name:"湖畔散步／回房準備",note:"準備外套、相機與船票，湖面晚間可能有風。",stay:"約 45 分",next:"前往碼頭"},
       {time:"20:00",name:"前往煙火船碼頭",note:"預留找路、排隊與驗票時間。",stay:"",next:""},
       {time:"20:15–20:25",name:"抵達花火觀賞船碼頭",note:"官方船班 20:35 出航；網路票需最晚在出航前10分鐘換成紙票。",stay:"候船／驗票",next:""},
       {time:"20:35–21:20 左右",name:"洞爺湖花火觀賞船",note:"固定事件：官方運航約20:35–21:20；煙火本身約20:45–21:05。",stay:"約 45 分",next:"返回飯店泡湯"}
@@ -881,10 +892,11 @@ const dayData = {
         title:"小樽早晨",
         note:"Day 3 離開小樽前",
         shops:[
-          ["主行程","小樽運河","早晨人少，適合散步與拍照。","全天開放","https://www.google.com/maps/search/?api=1&query=小樽運河","小樽早晨"],
-          ["咖啡","北一硝子 北一ホール","167盞石油燈照明的咖啡空間。","09:00–17:30；點餐 09:30–17:00","https://www.google.com/maps/search/?api=1&query=北一硝子+北一ホール","小樽早晨"],
-          ["主選外帶","EBIJIN 小樽店","後志產鹿肉漢堡專門店，可外帶；地址：小樽市稲穂2-13-16。沒有專用停車場。","平日、六 11:00–15:00／17:00–19:00；日 12:00–17:00；不定休","https://www.google.com/maps/search/?api=1&query=EBIJIN+小樽店+稲穂2-13-16","小樽漢堡"],
-          ["備案","CONTAINER BURGER 3 -SUN-","位於小樽觀光停車場第1內，停車方便；地址：港町5-3。你的備註：漢堡好吃，無酒精啤酒約¥250。","11:00–19:00（L.O.18:30）；臨時休業需確認","https://www.google.com/maps/search/?api=1&query=CONTAINER+BURGER+3-SUN+小樽","小樽漢堡"]
+          ["主行程","小樽運河／中央橋公園","拍攝清晨石造倉庫、運河與水面倒影。","全天開放","https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E5%A4%AE%E6%A9%8B%E5%85%AC%E5%9C%92+4-3+Minatomachi+Otaru+Hokkaido","小樽早晨"],
+          ["咖啡","北一硝子 北一ホール","點咖啡、皇家奶茶、蛋糕或霜淇淋，座位區由 167 盞石油燈照明。","09:00–17:30；點餐 09:30–17:00","https://www.google.com/maps/search/?api=1&query=北一硝子+北一ホール","小樽早晨"],
+          ["主選外帶","EBIJIN 小樽店","後志產鹿肉漢堡專門店，可外帶；地址：小樽市稲穂2-13-16。沒有專用停車場。","平日、六 11:00–15:00／17:00–19:00；日 12:00–17:00；不定休","https://www.google.com/maps/search/?api=1&query=EBIJIN+%E5%B0%8F%E6%A8%BD%E5%BA%97+2+Chome-13-16+Inaho+Otaru+Hokkaido+047-0032","小樽漢堡"],
+          ["採買","サツドラ小樽堺町店","補防曬、暈車藥、腸胃藥、止痛藥、面膜與旅行消耗品。","營業時間待確認","https://www.google.com/maps/search/?api=1&query=サツドラ小樽堺町店","小樽採買"],
+          ["備案","CONTAINER BURGER 3 -SUN-","點牛肉漢堡、薯條與無酒精啤酒。","11:00–19:00（L.O.18:30）；臨時休業需確認","https://www.google.com/maps/search/?api=1&query=CONTAINER+BURGER+3-SUN+小樽","小樽漢堡"]
         ]
       },
       {
@@ -892,40 +904,38 @@ const dayData = {
         note:"Day 3 中午",
         shops:[
           ["停車","Kutosan Park Parking Lot／くとさんパーク駐車場","俱知安車站附近停車點，停好後步行前往午餐。","依現場標示","https://www.google.com/maps/search/?api=1&query=くとさんパーク+駐車場+倶知安","俱知安"],
-          ["午餐","MARKIE CURRY／マーキーカリー","俱知安在地湯咖哩；店家另有少量免費車位，Kutosan Park 可作為備用停車。","11:30–21:00；週四休，臨時異動看官方社群","https://www.google.com/maps/search/?api=1&query=MARKIE+CURRY+倶知安","俱知安"]
+          ["午餐","MARKIE CURRY／マーキーカリー","點雞腿野菜湯咖哩，可依喜好選辣度與飯量。","11:30–21:00；週四休，臨時異動看官方社群","https://www.google.com/maps/search/?api=1&query=MARKIE+CURRY+倶知安","俱知安"]
         ]
       },
       {
         title:"二世谷下午",
         note:"牧場為固定；fanfun 為可選的獨立停車點",
         shops:[
-          ["冰品必吃","ニセコ高橋牧場 Milk Kobo","導航請直接設定 Milk Kobo；牛奶霜淇淋與乳製品冰品是今日指定必吃。","09:30–18:00","https://www.google.com/maps/search/?api=1&query=ニセコ高橋牧場+ミルク工房","高橋牧場"],
-          ["導航資訊","ニセコ高橋牧場 Milk Kobo","〒048-1522 北海道虻田郡ニセコ町字曽我888-1；Mapcode 398 321 164*50。","免費停車","https://www.google.com/maps/search/?api=1&query=ニセコ高橋牧場+ミルク工房","高橋牧場"],
-          ["可停留","革と珈琲 fanfun","與 Milk Kobo 不是同一停留點，需要重新開車；皮革工藝、咖啡與選物。","夏季約 10:00–17:00；週二休","https://www.google.com/maps/search/?api=1&query=革と珈琲+fanfun+ニセコ","fanfun"],
-          ["導航資訊","革と珈琲 fanfun","〒048-1522 北海道虻田郡ニセコ町曽我256-3；有小型免費停車場。","依現場車位","https://www.google.com/maps/search/?api=1&query=革と珈琲+fanfun+ニセコ","fanfun"]
+          ["冰品必吃","ニセコ高橋牧場 Milk Kobo","吃牛奶霜淇淋，買飲用優格、乳酪塔與泡芙；地址曽我888-1，Mapcode 398 321 164*50。","09:30–18:00；免費停車","https://www.google.com/maps/search/?api=1&query=ニセコ高橋牧場+ミルク工房","高橋牧場"],
+          ["可停留","革と珈琲 fanfun","買手工皮夾、零錢包與皮革小物，搭配手沖咖啡；地址曽我256-3。","夏季約 10:00–17:00；週二休；小型免費停車場","https://www.google.com/maps/search/?api=1&query=革と珈琲+fanfun+ニセコ","fanfun"]
         ]
       },
       {
-        title:"沿途可停留",
-        note:"不放進主時間軸，僅視需要使用",
+        title:"前往洞爺湖途中（二選一）",
+        note:"兩個地點只停一個即可，依當天時間與需求選擇",
         shops:[
-          ["可停留","道の駅 230ルスツ","洗手間、補飲料與短暫伸展；若行程順暢可直接不停。","9月賣店約 09:00–18:00","https://www.google.com/maps/search/?api=1&query=道の駅+230ルスツ","留壽都"]
+          ["休息站","道の駅 230ルスツ","補飲料，買留壽都當地蔬菜、馬鈴薯與豬肉加工品。","9月賣店約 09:00–18:00","https://www.google.com/maps/search/?api=1&query=道の駅+230ルスツ","途中擇一"],
+          ["冰品","Lake Hill Farm 本店","吃牧場牛奶 Gelato，可選牛奶、香草或當日季節口味。","9月 09:00–18:00","https://www.google.com/maps/search/?api=1&query=レークヒル・ファーム+花和127","途中擇一"]
         ]
       },
       {
-        title:"洞爺湖冰品參考",
-        note:"不改主時間軸；只有路線與時間適合才考慮",
+        title:"洞爺湖商店參考",
+        note:"住宿後、晚餐前排定前往",
         shops:[
-          ["代表冰品","Lake Hill Farm 本店","牧場直營Gelato；位於花和高地，從溫泉街官方估約20分鐘車程。","9月 09:00–18:00","https://www.google.com/maps/search/?api=1&query=レークヒル・ファーム+花和127","洞爺湖"],
-          ["備選","Lake Hill Farm 道の駅あぷた店","可吃Lake Hill Farm Gelato，但不保證與本店所有口味相同。","4–10月 09:00–18:00","https://www.google.com/maps/search/?api=1&query=レークヒル・ファーム+道の駅あぷた店","洞爺湖"],
-          ["待確認","わかさいも本舗 洞爺湖本店","店家值得逛，但目前未確認洞爺湖本店有販售わかさいも霜淇淋。","09:00–18:00","https://www.google.com/maps/search/?api=1&query=わかさいも本舗+洞爺湖本店","洞爺湖溫泉街"]
+          ["排定採買","わかさいも本舗 洞爺湖本店","買わかさいも、いもてん與北海道あんぽてと。","09:00–19:30","https://www.google.com/maps/search/?api=1&query=わかさいも本舗+洞爺湖本店","洞爺湖溫泉街"]
         ]
       },
       {
         title:"洞爺湖晚上",
         note:"今晚有固定煙火船行程",
         shops:[
-          ["住宿","洞爺湖溫泉街","建議最晚 17:00 前抵達、入住並放行李。","全天","https://www.google.com/maps/search/?api=1&query=洞爺湖温泉街","洞爺湖溫泉街"],
+          ["住宿","洞爺湖住宿（Airbnb）","入住、放行李並確認免費停車。","入住時間依訂房資訊","https://www.google.com/maps/search/?api=1&query=40-2%20Toyakoonsen%2C%20Toyako%2C%20Abuta%20District%2C%20Hokkaido%20049-5721","洞爺湖住宿"],
+          ["超商補給","Seicomart 洞爺田中店","買飲料、早餐、HOT CHEF 熟食與北海道限定零食。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=Seicomart%20%E6%B4%9E%E7%88%BA%E7%94%B0%E4%B8%AD%E5%BA%97%2038-1%20Toyakoonsen%2C%20Toyako%2C%20Abuta%20District%2C%20Hokkaido%20049-5721%E6%97%A5%E6%9C%AC","洞爺湖住宿周邊"],
           ["固定事件","洞爺湖煙火觀賞船","官方成人票 ¥1,900、兒童 ¥950；花火船碼頭位於洞爺湖萬世閣與乃之風之間。","官方船班約 20:35–21:20；煙火約 20:45–21:05","https://www.google.com/maps/search/?api=1&query=洞爺湖+花火鑑賞船","洞爺湖碼頭"]
         ]
       }
@@ -933,16 +943,18 @@ const dayData = {
   },
   day4:{
     label:"Day 4｜9/19（六）",
-    route:"洞爺湖 → 有珠山 → 白老／虎杖浜 → 苫小牧",
+    route:"有珠山 → 虎杖浜 → 苫小牧",
     hotel:"苫小牧住宿",
     highlights:["有珠山纜車","🍴 午餐（二選一）","苫小牧夜間採買"],
     missions:["確認有珠山纜車營運","選定午餐方案","買鱈魚子或牧場甜點","入住苫小牧"],
-    foodFocus:["白老牛方案","虎杖浜海鮮方案","Mother’s Plus布丁霜淇淋"],
+    foodFocus:["虎杖浜海鮮方案","白老牛方案","鱈魚子伴手禮"],
     sharedStops:[
       {time:"上午",name:"洞爺湖早晨／山岳喫茶（候選）",note:"是否前往依起床時間與店家營業狀況決定。",stay:"待確認",next:""},
       {time:"上午至中午",name:"有珠山纜車",note:"依天氣、風勢與當日營運狀態決定是否搭乘，並預留山頂步道時間。",stay:"約 1.5–2 小時",next:"前往白老／虎杖浜"}
     ],
-    defaultPlan:"beef",
+    defaultPlan:"seafood",
+    planOrder:["seafood","beef"],
+    areaOrder:["有珠山","虎杖浜海鮮","白老牛","苫小牧入住後"],
     plans:{
       beef:{
         title:"🥩 白老牛午餐",
@@ -973,9 +985,9 @@ const dayData = {
         title:"🍴 午餐（二選一）｜白老牛",
         note:"只去一家；其他全部是備選",
         shops:[
-          ["午餐候選","牛の里 白老本店","白老牛料理與外帶可樂餅、肉包、便當。","午餐時間出發前確認","https://www.google.com/maps/search/?api=1&query=牛の里+白老本店","白老"],
-          ["午餐候選","おいしい肉屋さん 白老店","肉舖型白老牛用餐／採買候選。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=おいしい肉屋さん+白老店","社台"],
-          ["午餐候選","Shiraoi Beef Shop Iwasaki Omotenashi-tei","白老牛岩崎牧場體系餐廳。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=白老牛の店いわさき+おもてなし亭","社台"],
+          ["午餐候選","牛の里 白老本店","吃白老牛漢堡排或牛排，外帶白老牛可樂餅、肉包與便當。","午餐時間出發前確認","https://www.google.com/maps/search/?api=1&query=牛の里+白老本店","白老"],
+          ["午餐候選","おいしい肉屋さん 白老店","吃白老牛燒肉或肉料理，並可採買冷藏白老牛肉。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=おいしい肉屋さん+白老店","社台"],
+          ["午餐候選","Shiraoi Beef Shop Iwasaki Omotenashi-tei","點岩崎牧場白老牛排、漢堡排或燒肉套餐。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=白老牛の店いわさき+おもてなし亭","社台"],
           ["甜點","Mother’s Plus","雞蛋布丁、泡芙、布丁霜淇淋；免費停車。","10:00–17:00","https://www.google.com/maps/search/?api=1&query=マザーズプラス+白老","社台"]
         ]
       },
@@ -983,9 +995,9 @@ const dayData = {
         title:"🍴 午餐（二選一）｜虎杖浜海鮮",
         note:"午餐選一；吃完後水產店依南往北順路停留",
         shops:[
-          ["午餐候選","白老たっちゃん食堂","水產公司直營，海鮮丼與魚料理。","10:00–14:00；火、三休","https://www.google.com/maps/search/?api=1&query=白老たっちゃん食堂","虎杖浜"],
-          ["午餐候選","Kojohama Café／虎杖浜カフェ","可作輕午餐或咖啡；完整營業資料出發前再確認。","出發前確認","https://www.google.com/maps/search/?api=1&query=虎杖浜カフェ","虎杖浜"],
-          ["水產伴手禮","たらこ家 虎杖浜","鱈魚子專賣並有食堂；商店與食堂營業時間不同。","商店約09:00–17:00；週四休","https://www.google.com/maps/search/?api=1&query=たらこ家+虎杖浜","虎杖浜"],
+          ["午餐候選","白老たっちゃん食堂","點海鮮丼、烤魚定食或當日水產料理。","10:00–14:00；火、三休","https://www.google.com/maps/search/?api=1&query=白老たっちゃん食堂","虎杖浜"],
+          ["午餐候選","Kojohama Café／虎杖浜カフェ","點咖啡、甜點或當日輕食，菜單以現場為準。","出發前確認","https://www.google.com/maps/search/?api=1&query=Kojohama+Cafe+%E7%99%BD%E8%80%81+%E8%99%8E%E6%9D%96%E6%B5%9C","虎杖浜"],
+          ["水產伴手禮","たらこ家 虎杖浜","買虎杖浜鱈魚子、明太子與冷藏水產，食堂可點鱈魚子飯。","商店約09:00–17:00；週四休","https://www.google.com/maps/search/?api=1&query=たらこ家+虎杖浜","虎杖浜"],
           ["水產伴手禮","虎杖浜たらこのかんばら直売所","無著色鱈魚子、真空包與送禮選擇。","09:00–16:30；週三休","https://www.google.com/maps/search/?api=1&query=虎杖浜たらこのかんばら","虎杖浜"]
         ]
       },
@@ -993,11 +1005,9 @@ const dayData = {
         title:"苫小牧入住後",
         note:"依需求選擇，不需要三家全部去",
         shops:[
-          ["住宿旁藥妝","ツルハドラッグ 苫小牧王子店","北海道旭川創業、現為全國連鎖；住宿旁步行補藥妝，自有品牌くらしリズム。","09:00–22:00","https://www.google.com/maps/search/?api=1&query=ツルハドラッグ+苫小牧王子店","表町"],
-          ["北海道超商","セイコーマート 苫小牧表町店","HOT CHEF、Secoma自有品、北海道乳製品與冰品；最有北海道地方感。","06:00–24:00","https://www.google.com/maps/search/?api=1&query=セイコーマート+苫小牧表町店","表町"],
-          ["大型採買","MEGAドン・キホーテ 苫小牧店","需要大量補食品、藥妝與生活用品才開車前往；最晚關門。","09:00–24:00","https://www.google.com/maps/search/?api=1&query=MEGAドン・キホーテ+苫小牧店","木場町"],
-          ["冰品候選","幸せの生ソフト プチラパン","苫小牧生霜淇淋候選；獎項說法尚未找到可信主辦來源。","11:00–18:00；不定休","https://www.google.com/maps/search/?api=1&query=幸せの生ソフト+プチラパン","苫小牧"],
-          ["冰品備選","北からの贈り物 苫小牧店","北海道牛乳Blender Ice與Gelato；位於沼ノ端。","約10:00–17:30，出發前確認","https://www.google.com/maps/search/?api=1&query=北からの贈り物+苫小牧店","沼ノ端"]
+          ["北海道超商","セイコーマート 苫小牧表町店","買 HOT CHEF 豬排丼或炸雞、山わさび零食、北海道牛乳與哈密瓜冰品。","06:00–24:00","https://www.google.com/maps/search/?api=1&query=セイコーマート+苫小牧表町店","表町"],
+          ["大型採買","MEGAドン・キホーテ 苫小牧店","一次補零食、飲料、藥妝、盥洗用品與北海道伴手禮。","09:00–24:00","https://www.google.com/maps/search/?api=1&query=MEGAドン・キホーテ+苫小牧店","木場町"],
+          ["藥妝","Tsuruha Drug／ツルハドラッグ 苫小牧王子店","補藥品、面膜、旅行用品與日用品。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=Tsuruha%20Drug%20%E3%83%84%E3%83%AB%E3%83%8F%E3%83%89%E3%83%A9%E3%83%83%E3%82%B0%20%E8%8B%AB%E5%B0%8F%E7%89%A7%E7%8E%8B%E5%AD%90%E5%BA%97%204%20Chome-3-23%20Omotemachi%2C%20Tomakomai%2C%20Hokkaido%20053-0022%E6%97%A5%E6%9C%AC","苫小牧入住後"]
         ]
       }
     ]
@@ -1011,33 +1021,29 @@ const dayData = {
     hotel:"返程",
     stops:[
       {time:"07:40 左右",name:"苫小牧住宿出發",note:"還車預約固定為09:00，必須倒推時間；此出發時間仍需依飯店位置與導航微調。",stay:"",next:""},
-      {time:"08:00–08:20",name:"道の駅ウトナイ湖（可略過）",note:"只能短停約15–20分鐘；若出發延誤、路況不佳或需加油，直接取消。",stay:"最多 20 分",next:"最晚約08:25離開"},
       {time:"08:45–09:00",name:"新千歲機場鈴蘭店還車",note:"預約還車時間09:00；原網頁寫09:20抵達是錯誤，已修正。",stay:"依店家流程",next:"接駁前往機場"},
       {time:"09:30–11:15",name:"新千歲機場補貨／用餐",note:"預留接駁、報到、安檢與購物時間；餐廳是否排隊需現場判斷。",stay:"約 90 分",next:"準備登機"},
       {time:"12:05",name:"IT235 新千歲 → 桃園",note:"回程航班。",stay:"",next:""}
     ],
     areas:[
       {
-        title:"苫小牧至機場",
-        note:"Day 5 上午",
+        title:"還車點",
+        note:"預約 09:00 還車",
         shops:[
-          ["短停","道の駅ウトナイ湖","湖畔木棧道、野鳥與最後休息。","營業時間依設施；戶外區域可早到","https://www.google.com/maps/search/?api=1&query=道の駅ウトナイ湖","ウトナイ湖"],
-          ["還車","トヨタレンタカー 新千歳空港すずらん店","預約還車時間 09:00。","依預約時間","https://www.google.com/maps/search/?api=1&query=トヨタレンタカー+新千歳空港すずらん店","新千歲"]
-        ]
-      },
-      {
-        title:"新千歲機場",
-        note:"Day 5 返程",
-        shops:[
-          ["用餐候選","えびそば一幻 新千歳空港店","蝦味噌拉麵，視排隊時間決定。","機場店營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=えびそば一幻+新千歳空港店","新千歲機場"],
-          ["採買","新千歲機場國內線商店區","乳製品、Royce、LeTAO、薯條三兄弟等最後補貨。","依各店營業時間","https://www.google.com/maps/search/?api=1&query=新千歳空港+国内線+ショップ","新千歲機場"]
+          ["還車","トヨタレンタカー 新千歳空港すずらん店","預約還車時間 09:00。","依預約時間","https://www.google.com/maps/search/?api=1&query=Toyota+Rent+a+Car+New+Chitose+Airport+Suzuran+Shop+758-134+Bibi+Chitose+Hokkaido","新千歲"]
         ]
       }
     ]
   }
 };
 
-const mapLink=name=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name.replace(/（.*?）/g,"").replace(/\/.*$/,""))}`;
+const mapLink=name=>{
+  if(name.includes("新千歲機場鈴蘭店") || name.includes("新千歲機場／取車")) return "https://www.google.com/maps/search/?api=1&query=Toyota+Rent+a+Car+New+Chitose+Airport+Suzuran+Shop+758-134+Bibi+Chitose+Hokkaido";
+  if(name.includes("花ロードえにわ")) return "https://www.google.com/maps/search/?api=1&query=%E8%8A%B1%E3%83%AD%E3%83%BC%E3%83%89%E3%81%88%E3%81%AB%E3%82%8F+817-18+Minamishimamatsu+Eniwa+Hokkaido+061-1375";
+  if(name.includes("EBIJIN 小樽店")) return "https://www.google.com/maps/search/?api=1&query=EBIJIN+%E5%B0%8F%E6%A8%BD%E5%BA%97+2+Chome-13-16+Inaho+Otaru+Hokkaido+047-0032";
+  if(name.includes("頭大佛")) return "https://www.google.com/maps/search/?api=1&query=2%20Takino%2C%20Minami%20Ward%2C%20Sapporo%2C%20Hokkaido%20005-0862%E6%97%A5%E6%9C%AC";
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name.replace(/（.*?）/g,"").replace(/\/.*$/,""))}`;
+};
 const shortText=text=>(text||"").split(/[；。]/)[0].replace(/^(建議|主要|安排)/,"");
 
 function stopMarkup(stops){
@@ -1045,7 +1051,8 @@ function stopMarkup(stops){
     <div class="stop">
       <div class="arrival">${s.time}</div>
       <div class="stop-content">
-        <div class="place-title">${/^IT\d/.test(s.name)?s.name:`<a href="${mapLink(s.name)}" target="_blank" rel="noopener">${s.name} ↗</a>`}</div>
+        <div class="place-title">${s.name}</div>
+        ${s.options?`<div class="stop-options">${s.options.map(o=>`<span class="stop-option">${o.label}｜${o.name}</span>`).join("")}</div>`:""}
         ${s.note?`<div class="place-note">${shortText(s.note)}</div>`:""}
         <div class="metrics">
           ${s.stay?`<span class="metric stay">⏱ ${s.stay}</span>`:""}
@@ -1060,7 +1067,6 @@ function areaMarkup(areas){
   return areas.map(a=>`
     <details class="area-card">
       <summary>${a.title}</summary>
-      <div class="area-note">${a.note}</div>
       ${(() => {
         let lastDistrict = "";
         return a.shops.map(shop => {
@@ -1070,17 +1076,13 @@ function areaMarkup(areas){
           const district = extended ? shop[5] : "";
           const header = district && district !== lastDistrict ? `<div class="district-label">${district}</div>` : "";
           if (district) lastDistrict = district;
-          const alert = shop[1].includes("場外市場バス駐車場")
-            ? `<div class="shop-alert">注意：官方資料屬巴士停車場；一般乘用車請先確認現場指示。場外市場另有訪客免費停車場。</div>`
-            : "";
-          const ice=/冰品|霜淇淋|ソフト|Gelato|MIL PRESSO|Milk Kobo|LeTAO PLUS|Mother’s Plus|札幌農学校|北一 Terrace|ポプラファーム|幸せの生ソフト/.test(shop.join(" "));
+          const ice=/冰品|霜淇淋|ソフト|Gelato|MIL PRESSO|Milk Kobo|LeTAO PLUS|Mother’s Plus|札幌農学校|北一 Terrace|ポプラファーム/.test(shop.join(" "));
           const name=(ice && !shop[1].startsWith("🍦"))?`🍦 ${shop[1]}`:shop[1];
           const description=shortText(shop[2]);
           return `${header}<div class="shop">
             <a href="${link}" target="_blank" rel="noopener">${name} ↗</a>
             ${description?`<p>${description}</p>`:""}
             ${hours ? `<div class="shop-hours">🕘 ${hours}</div>` : ""}
-            ${alert}
           </div>`;
         }).join("");
       })()}
@@ -1093,7 +1095,7 @@ const mustDoByDate={
   "9/16":["🍦 札幌農学校 牛奶霜淇淋","🥐 南瓜咖哩麵包"],
   "9/17":["🦀 中央市場海鮮","🍦 小樽代表冰品","🍽️ 小樽 Muse"],
   "9/18":["☕ 北一ホール","🍔 鹿肉漢堡","🍦 Milk Kobo 牛奶霜淇淋","🎆 洞爺湖煙火船"],
-  "9/19":["🚠 有珠山纜車","🥩 白老牛 或 🐟 虎杖浜海鮮","🍦 Mother’s Plus 布丁霜淇淋（白老線）"],
+  "9/19":["🚠 有珠山纜車","🐟 虎杖浜海鮮 或 🥩 白老牛","🎁 虎杖浜鱈魚子伴手禮（海鮮線）"],
   "9/20":["🎁 新千歲機場伴手禮"]
 };
 function dayBriefMarkup(d){
@@ -1142,6 +1144,15 @@ function switchDayPlan(day, planKey){
 function renderDay(dayKey, selectedPlan){
   const d=dayData[dayKey];
   const detail=document.getElementById("dayDetail");
+  const orderedAreas=d.areaOrder
+    ? [...d.areas].sort((a,b)=>{
+        const rank=title=>{
+          const i=d.areaOrder.findIndex(key=>title.includes(key));
+          return i<0?d.areaOrder.length:i;
+        };
+        return rank(a.title)-rank(b.title);
+      })
+    : d.areas;
 
   if(d.plans){
     const planKey=selectedPlan || d.defaultPlan || Object.keys(d.plans)[0];
@@ -1165,7 +1176,7 @@ function renderDay(dayKey, selectedPlan){
         <div class="plan-switch">
           <div class="plan-switch-title">🍴 午餐（二選一）</div>
           <div class="plan-buttons">
-            ${Object.entries(d.plans).map(([key,p])=>`
+            ${(d.planOrder||Object.keys(d.plans)).map(key=>[key,d.plans[key]]).map(([key,p])=>`
               <button class="plan-btn ${key===planKey?"active":""}" data-plan="${key}">
                 ${p.title}
                 <small>${p.subtitle}</small>
@@ -1179,7 +1190,7 @@ function renderDay(dayKey, selectedPlan){
 
         <div class="area-list">
           <h3 style="margin:14px 0 2px">今日會經過的區域</h3>
-          ${areaMarkup(d.areas)}
+          ${areaMarkup(orderedAreas)}
         </div>
       </article>
     `;
@@ -1203,7 +1214,7 @@ function renderDay(dayKey, selectedPlan){
         ${stopMarkup(d.stops)}
         <div class="area-list">
           <h3 style="margin:14px 0 2px">今日會經過的區域</h3>
-          ${areaMarkup(d.areas)}
+          ${areaMarkup(orderedAreas)}
         </div>
       </article>
     `;
@@ -1310,15 +1321,15 @@ function initCurrencyTool(){
   if(!twd || !jpy || !rate) return;
 
   const stored=Number(localStorage.getItem("travelos-jpy-rate"));
-  if(Number.isFinite(stored) && stored>0) rate.value=(1/stored).toFixed(2);
+  if(Number.isFinite(stored) && stored>0) rate.value=stored.toFixed(4);
 
   const currentRate=()=>{
     const value=Number(rate.value);
-    return Number.isFinite(value) && value>0 ? value : 4.55;
+    return Number.isFinite(value) && value>0 ? value : 0.22;
   };
-  const fromTwd=()=>{
-    const value=Number(twd.value);
-    jpy.value=Number.isFinite(value) && twd.value!=="" ? Math.round(value*currentRate()) : "";
+  const fromJpy=()=>{
+    const value=Number(jpy.value);
+    twd.value=Number.isFinite(value) && jpy.value!=="" ? Math.round(value*currentRate()) : "";
   };
 
   async function loadLiveRate(){
@@ -1330,26 +1341,26 @@ function initCurrencyTool(){
       const data=await res.json();
       const value=Number(data.rate);
       if(!Number.isFinite(value) || value<=0) throw new Error("invalid rate");
-      rate.value=(1/value).toFixed(2);
+      rate.value=value.toFixed(4);
       localStorage.setItem("travelos-jpy-rate",String(value));
-      fromTwd();
+      fromJpy();
     }catch(e){
       const cached=Number(localStorage.getItem("travelos-jpy-rate"));
       if(Number.isFinite(cached) && cached>0){
-        rate.value=(1/cached).toFixed(2);
+        rate.value=cached.toFixed(4);
       }
       status.textContent="";
-      fromTwd();
+      fromJpy();
     }finally{
       if(refresh) refresh.disabled=false;
     }
   }
 
-  twd.addEventListener("input",fromTwd);
+  jpy.addEventListener("input",fromJpy);
   if(refresh) refresh.addEventListener("click",loadLiveRate);
-  document.querySelectorAll("[data-twd]").forEach(btn=>btn.addEventListener("click",()=>{
-    twd.value=btn.dataset.twd;
-    fromTwd();
+  document.querySelectorAll("[data-jpy]").forEach(btn=>btn.addEventListener("click",()=>{
+    jpy.value=btn.dataset.jpy;
+    fromJpy();
   }));
   loadLiveRate();
 }
