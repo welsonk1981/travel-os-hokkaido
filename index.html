@@ -949,8 +949,13 @@ const dayData = {
     missions:["確認有珠山纜車營運","選定午餐方案","買鱈魚子或牧場甜點","入住苫小牧"],
     foodFocus:["虎杖浜海鮮方案","白老牛方案","鱈魚子伴手禮"],
     sharedStops:[
-      {time:"上午",name:"洞爺湖早晨／山岳喫茶（候選）",note:"是否前往依起床時間與店家營業狀況決定。",stay:"待確認",next:""},
-      {time:"上午至中午",name:"有珠山纜車",note:"依天氣、風勢與當日營運狀態決定是否搭乘，並預留山頂步道時間。",stay:"約 1.5–2 小時",next:"前往白老／虎杖浜"}
+      {time:"07:30–08:00",name:"洞爺湖早餐／退房",note:"在住宿周邊完成早餐，整理行李後出發。",stay:"約 30 分",next:"前往有珠山約 15–20 分"},
+      {time:"08:15–10:30",name:"有珠山纜車",note:"搭乘纜車並預留山頂觀景台與步道時間；依當日天氣、風勢及營運公告調整。",stay:"約 2 小時 15 分",next:"前往虎杖浜／白老約 75 分"}
+    ],
+    afterPlanStops:[
+      {time:"16:30–17:00",name:"苫小牧住宿",note:"Check-in、放行李並確認停車。",stay:"約 30 分",next:"晚餐與市區補給"},
+      {time:"18:00–19:00",name:"苫小牧晚餐",note:"入住後先完成晚餐。",stay:"約 60 分",next:"前往表町／木場町採買"},
+      {time:"19:00–20:30",name:"苫小牧晚間採買",note:"依需求前往 Seicomart、MEGA Don Quijote 或 Tsuruha Drug，購買早餐、北海道零食、藥妝與旅行用品。",stay:"約 90 分",next:"返回住宿"}
     ],
     defaultPlan:"seafood",
     planOrder:["seafood","beef"],
@@ -960,16 +965,16 @@ const dayData = {
         title:"🥩 白老牛午餐",
         subtitle:"白老牛餐廳選一＋Mother’s Plus甜點",
         stops:[
-          {time:"中午",name:"白老牛午餐（選一）",note:"依排隊、預算與營業狀況決定一家。",stay:"約 60–90 分",next:""},
-          {time:"飯後",name:"Mother’s Plus",note:"布丁、泡芙、布丁霜淇淋；牧場直營雞蛋甜點。",stay:"約 20–30 分",next:"前往苫小牧"}
+          {time:"11:45–13:15",name:"白老牛午餐（選一）",note:"牛の里、いわさき等候選餐廳擇一。",stay:"約 90 分",next:"前往 Mother’s Plus"},
+          {time:"13:15–13:45",name:"Mother’s Plus",note:"購買雞蛋布丁、泡芙或布丁霜淇淋。",stay:"約 30 分",next:"前往苫小牧約 60–75 分"}
         ]
       },
       seafood:{
         title:"🐟 虎杖浜海鮮午餐",
         subtitle:"海鮮午餐選一＋鱈魚子伴手禮",
         stops:[
-          {time:"中午",name:"虎杖浜午餐（選一）",note:"たっちゃん食堂或Kojohama Café擇一。",stay:"約 60–90 分",next:""},
-          {time:"飯後",name:"虎杖浜沿途水產",note:"依南往北方向停留たらこ家與かんばら，不必全部買。",stay:"約 30–60 分",next:"前往苫小牧"}
+          {time:"11:45–13:15",name:"虎杖浜午餐（選一）",note:"たっちゃん食堂或 Kojohama Café 擇一。",stay:"約 90 分",next:"前往沿途水產店"},
+          {time:"13:15–14:15",name:"虎杖浜沿途水產",note:"依南往北方向停留たらこ家與かんばら，購買鱈魚子、明太子與冷藏水產。",stay:"約 60 分",next:"前往苫小牧約 60–75 分"}
         ]
       }
     },
@@ -1003,8 +1008,9 @@ const dayData = {
       },
       {
         title:"苫小牧入住後",
-        note:"依需求選擇，不需要三家全部去",
+        note:"先入住住宿，再依需求選擇採買點",
         shops:[
+          ["住宿","苫小牧住宿","Check-in、放行李並確認停車。","入住時間依訂房資訊","https://www.google.com/maps/search/?api=1&query=4%20Chome-3-1%20Omotemachi%2C%20Tomakomai%2C%20Hokkaido%20053-0022","表町"],
           ["北海道超商","セイコーマート 苫小牧表町店","買 HOT CHEF 豬排丼或炸雞、山わさび零食、北海道牛乳與哈密瓜冰品。","06:00–24:00","https://www.google.com/maps/search/?api=1&query=セイコーマート+苫小牧表町店","表町"],
           ["大型採買","MEGAドン・キホーテ 苫小牧店","一次補零食、飲料、藥妝、盥洗用品與北海道伴手禮。","09:00–24:00","https://www.google.com/maps/search/?api=1&query=MEGAドン・キホーテ+苫小牧店","木場町"],
           ["藥妝","Tsuruha Drug／ツルハドラッグ 苫小牧王子店","補藥品、面膜、旅行用品與日用品。","營業時間出發前確認","https://www.google.com/maps/search/?api=1&query=Tsuruha%20Drug%20%E3%83%84%E3%83%AB%E3%83%8F%E3%83%89%E3%83%A9%E3%83%83%E3%82%B0%20%E8%8B%AB%E5%B0%8F%E7%89%A7%E7%8E%8B%E5%AD%90%E5%BA%97%204%20Chome-3-23%20Omotemachi%2C%20Tomakomai%2C%20Hokkaido%20053-0022%E6%97%A5%E6%9C%AC","苫小牧入住後"]
@@ -1187,6 +1193,8 @@ function renderDay(dayKey, selectedPlan){
 
         <div class="plan-label" id="dayPlanLabel">🍴 午餐（二選一）｜${plan.title.replace(/^[🥩🐟]\s*/,"").replace(/午餐$/,"")}</div>
         <div id="dayPlanStops" aria-live="polite">${stopMarkup(plan.stops)}</div>
+
+        ${d.afterPlanStops?.length ? `<div class="plan-label">住宿與晚上</div>${stopMarkup(d.afterPlanStops)}` : ""}
 
         <div class="area-list">
           <h3 style="margin:14px 0 2px">今日會經過的區域</h3>
